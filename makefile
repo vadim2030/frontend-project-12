@@ -5,7 +5,7 @@ make start:
 	npm run start
 
 make install:
-	npm install
+	npm ci
 
 make deployment:
 	make install
