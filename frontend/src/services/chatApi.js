@@ -27,6 +27,13 @@ export const chatApi = createApi({
     getMessages: build.query({
       query: () => 'messages',
     }),
+    sendMessage: build.mutation({
+      query: (newMessage) => ({
+        url: 'messages',
+        method: 'POST',
+        body: newMessage,
+      }),
+    }),
   }),
 });
 
@@ -34,4 +41,5 @@ export const {
   useLoginMutation,
   useGetChannelsQuery,
   useGetMessagesQuery,
+  useSendMessageMutation,
 } = chatApi;

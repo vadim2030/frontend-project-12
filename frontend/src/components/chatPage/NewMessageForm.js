@@ -3,12 +3,18 @@ import { useEffect, useRef } from 'react';
 import { InputGroup, Form, Button } from 'react-bootstrap';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 import * as yup from 'yup';
+import { useSelector } from 'react-redux';
+import { useSendMessageMutation } from '../../services/chatApi';
 
 const newMessageSchema = yup.object().shape({
   newMessage: yup.string().required().trim().min(1),
 });
 
 const NewMessageForm = () => {
+  const [sendMessage] = useSendMessageMutation();
+
+  const channelId = useSelector((state) => state.channelData.currentChannelID);
+  const { username } = useSelector((state) => state.authData);
   const refControl = useRef(null);
   const formik = useFormik({
     initialValues: {
@@ -16,7 +22,18 @@ const NewMessageForm = () => {
     },
     isInitialValid: false,
     validationSchema: newMessageSchema,
-    onSubmit: (values) => console.log(values),
+    onSubmit: async ({ newMessage }) => {
+      try {
+        await sendMessage({
+          body: newMessage,
+          channelId,
+          username,
+        });
+        formik.values.newMessage = '';
+      } catch (err) {
+        console.log('Ошибка сети: ', err);
+      }
+    },
   });
 
   useEffect(() => {
@@ -26,8 +43,6 @@ const NewMessageForm = () => {
   const {
     handleChange, values: { newMessage }, handleSubmit, isValid, isSubmitting,
   } = formik;
-
-  console.log(isSubmitting);
 
   return (
     <div className="mt-auto px-5 py-3">
