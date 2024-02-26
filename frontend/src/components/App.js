@@ -9,6 +9,7 @@ import { setCredentials } from '../slices/authSlice.js';
 
 const App = ({ userData }) => {
   const dispatch = useDispatch();
+
   if (userData) {
     dispatch(setCredentials(userData));
   }

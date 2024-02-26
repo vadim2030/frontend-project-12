@@ -25,6 +25,17 @@ export const messagesSlice = createSlice({
         (state, { payload }) => {
           state.messages = payload;
         },
+      )
+      .addMatcher(
+        chatApi.endpoints.removeChannel.matchFulfilled,
+        (state, { payload }) => {
+          const { messages } = state;
+          const { id: removedChannelId } = payload;
+          const filteredMessages = messages
+            .filter(({ channelId }) => channelId !== removedChannelId);
+
+          state.messages = filteredMessages;
+        },
       );
   },
 });

@@ -1,15 +1,32 @@
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { switchChannel } from '../../slices/channelSlice';
+import { openModal } from '../../slices/modalSlice';
 
 const ChannelBtn = ({ channel }) => {
+  const dispatch = useDispatch();
   const { id, name, removable: isRemovable } = channel;
-
   const { currentChannelID } = useSelector((state) => state.channelData);
+
+  const handleRemoveModal = () => {
+    dispatch(openModal({
+      type: 'removeChannel',
+      chnId: id,
+      isOpened: true,
+    }));
+  };
+  const handleRenameModal = () => {
+    dispatch(openModal({
+      type: 'renameChannel',
+      isOpened: true,
+      chnId: id,
+    }));
+  };
 
   if (!isRemovable) {
     return (
       <li className="nav-item w-100">
-        <Button className="w-100 rounded-0 text-start" variant={id === currentChannelID ? 'secondary' : ''}>
+        <Button onClick={() => dispatch(switchChannel(id))} className="w-100 rounded-0 text-start" variant={id === currentChannelID ? 'secondary' : ''}>
           <span className="me-1">#</span>
           {name}
         </Button>
@@ -20,7 +37,7 @@ const ChannelBtn = ({ channel }) => {
   return (
     <li className="nav-item w-100">
       <ButtonGroup className="d-flex dropdown">
-        <Button className="w-100 rounded-0 text-start text-truncate" variant={id === currentChannelID ? 'secondary' : ''}>
+        <Button onClick={() => dispatch(switchChannel(id))} className="w-100 rounded-0 text-start text-truncate" variant={id === currentChannelID ? 'secondary' : ''}>
           <span className="me-1">#</span>
           {name}
         </Button>
@@ -29,8 +46,8 @@ const ChannelBtn = ({ channel }) => {
             <span className="visually-hidden">Управление каналом</span>
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item>Удалить</Dropdown.Item>
-            <Dropdown.Item>Переименовать</Dropdown.Item>
+            <Dropdown.Item onClick={handleRemoveModal}>Удалить</Dropdown.Item>
+            <Dropdown.Item onClick={handleRenameModal}>Переименовать</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </ButtonGroup>
