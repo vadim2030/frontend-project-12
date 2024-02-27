@@ -21,6 +21,13 @@ export const chatApi = createApi({
         body: credentials,
       }),
     }),
+    signup: build.mutation({
+      query: (credentials) => ({
+        url: 'signup',
+        method: 'POST',
+        body: credentials,
+      }),
+    }),
     getChannels: build.query({
       query: () => 'channels',
     }),
@@ -66,4 +73,5 @@ export const {
   useSendChannelMutation,
   useRenameChannelMutation,
   useRemoveChannelMutation,
+  useSignupMutation,
 } = chatApi;

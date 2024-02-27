@@ -3,10 +3,12 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useRenameChannelMutation } from '../../services/chatApi';
 import { closeModal } from '../../slices/modalSlice';
 
 const RenameChannelModal = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { isOpened, chnId } = useSelector((state) => state.modal);
   const { channels } = useSelector((state) => state.channelData);
@@ -18,10 +20,10 @@ const RenameChannelModal = () => {
   const inputRef = useRef(null);
 
   const newChannelSchema = yup.object().shape({
-    name: yup.string().required().trim().min(3, 'Минимум 3 символа')
-      .max(20, 'Максимум 20 символов!')
+    name: yup.string().required().trim().min(3, t('modals.errors.minLength'))
+      .max(20, t('modals.errors.maxLength'))
       .test({
-        message: 'Должно быть уникальным',
+        message: t('modals.errors.uniqueName'),
         test: (newName) => !channelNames.includes(newName),
       }),
   });
@@ -58,12 +60,12 @@ const RenameChannelModal = () => {
   return (
     <Modal onHide={handleClose} show={isOpened} dialogClassName="modal-dialog-centered">
       <Modal.Header closeButton>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('modals.RenameChannel.title')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formNewNameChl">
-            <Form.Label className="visually-hidden">Имя канала</Form.Label>
+            <Form.Label className="visually-hidden">{t('modals.RenameChannel.lable')}</Form.Label>
             <Form.Control
               ref={inputRef}
               onChange={handleChange}
@@ -76,8 +78,8 @@ const RenameChannelModal = () => {
             {!isValid && <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>}
           </Form.Group>
           <Modal.Footer>
-            <Button onClick={handleClose} type="button">Отменить</Button>
-            <Button ref={btnSubmit} type="submit">Отправить</Button>
+            <Button onClick={handleClose} type="button">{t('modals.btnCancel')}</Button>
+            <Button ref={btnSubmit} type="submit">{t('modals.btnSend')}</Button>
           </Modal.Footer>
         </Form>
       </Modal.Body>

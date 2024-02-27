@@ -7,11 +7,13 @@ import {
   useEffect, useRef, useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import getRoutes from '../routes.js';
 import { useLoginMutation } from '../services/chatApi.js';
 import { setUserLocalStore } from '../utils/localStore.js';
 
 const FormForLoginPage = () => {
+  const { t } = useTranslation();
   const usernameInput = useRef(null);
   const [isAuthFailed, setAuthFailed] = useState(false);
   const navigate = useNavigate();
@@ -26,11 +28,19 @@ const FormForLoginPage = () => {
       try {
         setAuthFailed(false);
         const response = await login(val);
+        if (response.error) throw response.error;
         setUserLocalStore(response.data);
         navigate(getRoutes.main());
       } catch (err) {
-        setAuthFailed(true);
-        console.log('Ошибка авторизации: ', err);
+        switch (err.status) {
+          case 401:
+            setAuthFailed(true);
+            break;
+
+          default:
+            console.log('Ошибка авторизации: ', err);
+            break;
+        }
       }
     },
   });
@@ -41,12 +51,12 @@ const FormForLoginPage = () => {
 
   return (
     <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 mt-mb-0">
-      <h1 className="text-center mb-4">Войти</h1>
-      <FloatingLabel className="mb-3" label="Ваш ник" controlId="username">
+      <h1 className="text-center mb-4">{t('LoginPage.form.header')}</h1>
+      <FloatingLabel className="mb-3" label={t('LoginPage.form.usernameLabel')} controlId="username">
         <Form.Control
           ref={usernameInput}
           required
-          placeholder="Ваш ник"
+          placeholder={t('LoginPage.form.usernameLabel')}
           autoComplete="username"
           name="username"
           onChange={formik.handleChange}
@@ -55,21 +65,21 @@ const FormForLoginPage = () => {
         />
       </FloatingLabel>
       <InputGroup className="mb-4">
-        <FloatingLabel label="Пароль" controlId="password">
+        <FloatingLabel label={t('LoginPage.form.passwordLabel')} controlId="password">
           <Form.Control
             required
             type="password"
-            placeholder="Пароль"
+            placeholder={t('LoginPage.form.passwordLabel')}
             autoComplete="current-password"
             name="password"
             onChange={formik.handleChange}
             value={formik.values.password}
             isInvalid={isAuthFailed}
           />
-          <div className="invalid-tooltip">Неверные имя пользователя или пароль</div>
+          <div className="invalid-tooltip">{t('LoginPage.form.errors.nonExistentUser')}</div>
         </FloatingLabel>
       </InputGroup>
-      <Button variant="outline-primary" type="submit" className="w-100 mb-3">Войти</Button>
+      <Button variant="outline-primary" type="submit" className="w-100 mb-3">{t('LoginPage.form.header')}</Button>
     </Form>
   );
 };

@@ -6,6 +6,7 @@ import NotFoundPage from '../page/NotFoundPage.js';
 import LoginPage from '../page/LoginPage.js';
 import ChatPage from '../page/ChatPage.js';
 import { setCredentials } from '../slices/authSlice.js';
+import SignupPage from '../page/SignupPage.js';
 
 const App = ({ userData }) => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const App = ({ userData }) => {
             <Route index element={<ChatPage />} />
             <Route path="*" element={<NotFoundPage />} />
             <Route path={getRoutes.loginPage()} element={<LoginPage />} />
+            <Route path={getRoutes.signupPage()} element={<SignupPage />} />
           </Route>
         </Routes>
       </div>

@@ -1,8 +1,10 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import NewMessageForm from './NewMessageForm';
 
 const Chat = () => {
+  const { t } = useTranslation();
   const chatRef = useRef(null);
   const { currentChannelID, channels } = useSelector((state) => state.channelData);
   const { messages } = useSelector((state) => state.messagesData);
@@ -26,9 +28,7 @@ const Chat = () => {
             </b>
           </p>
           <span className="text-muted">
-            {currentMessages.length}
-            {' '}
-            сообщений
+            {t('ChatPage.Chat.counterMessage.message', { count: currentMessages.length })}
           </span>
         </div>
         <div ref={chatRef} className="chat-messages overflow-auto px-5 ">

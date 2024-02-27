@@ -1,9 +1,11 @@
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { switchChannel } from '../../slices/channelSlice';
 import { openModal } from '../../slices/modalSlice';
 
 const ChannelBtn = ({ channel }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { id, name, removable: isRemovable } = channel;
   const { currentChannelID } = useSelector((state) => state.channelData);
@@ -43,11 +45,11 @@ const ChannelBtn = ({ channel }) => {
         </Button>
         <Dropdown>
           <Dropdown.Toggle style={{ borderRadius: 0 }} className="flex-grow-0 dropdown-toggle dropdown-toggle-split" variant={id === currentChannelID ? 'secondary' : ''}>
-            <span className="visually-hidden">Управление каналом</span>
+            <span className="visually-hidden">{t('ChatPage.ChannelsList.ChannelBtn.btnChannelManagement')}</span>
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item onClick={handleRemoveModal}>Удалить</Dropdown.Item>
-            <Dropdown.Item onClick={handleRenameModal}>Переименовать</Dropdown.Item>
+            <Dropdown.Item onClick={handleRemoveModal}>{t('ChatPage.ChannelsList.ChannelBtn.btnRemoveChannel')}</Dropdown.Item>
+            <Dropdown.Item onClick={handleRenameModal}>{t('ChatPage.ChannelsList.ChannelBtn.btnRenameChannel')}</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </ButtonGroup>
