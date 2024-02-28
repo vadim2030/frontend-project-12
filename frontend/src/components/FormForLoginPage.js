@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import getRoutes from '../routes.js';
 import { useLoginMutation } from '../services/chatApi.js';
 import { setUserLocalStore } from '../utils/localStore.js';
@@ -38,7 +39,7 @@ const FormForLoginPage = () => {
             break;
 
           default:
-            console.log('Ошибка авторизации: ', err);
+            toast.error(t('notifications.networkError'));
             break;
         }
       }

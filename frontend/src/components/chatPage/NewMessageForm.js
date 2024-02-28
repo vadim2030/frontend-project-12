@@ -5,6 +5,7 @@ import { ArrowRightSquare } from 'react-bootstrap-icons';
 import * as yup from 'yup';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useSendMessageMutation } from '../../services/chatApi';
 
 const newMessageSchema = yup.object().shape({
@@ -32,7 +33,7 @@ const NewMessageForm = () => {
         });
         formik.values.newMessage = '';
       } catch (err) {
-        console.log('Ошибка сети: ', err);
+        toast.error(t('notifications.networkError'));
       }
     },
   });

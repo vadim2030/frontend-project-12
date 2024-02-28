@@ -87,5 +87,14 @@ export default {
         uniqueName: 'Должно быть уникальным',
       },
     },
+    notifications: {
+      addChannelSuccess: 'Канал создан',
+      removeChannelSuccess: 'Канал удалён',
+      networkError: 'Произошла сетевая ошибка',
+      renameChannelSuccess: 'Канал переименован',
+
+    },
   },
 };
+
+// toast.error(t('notifications.addChannelError'));

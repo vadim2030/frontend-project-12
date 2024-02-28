@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useSignupMutation } from '../../services/chatApi';
 import { setUserLocalStore } from '../../utils/localStore';
 import { setCredentials } from '../../slices/authSlice';
@@ -48,7 +49,7 @@ const SignupForm = () => {
             break;
 
           default:
-            console.log('Произошла сетевая ошибка: ', err);
+            toast.error(t('notifications.networkError'));
             break;
         }
       }

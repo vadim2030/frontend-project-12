@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { Bounce, ToastContainer } from 'react-toastify';
 import getRoutes from '../routes.js';
 import Layout from './Layout.js';
 import NotFoundPage from '../page/NotFoundPage.js';
@@ -27,6 +28,19 @@ const App = ({ userData }) => {
           </Route>
         </Routes>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </BrowserRouter>
   );
 };

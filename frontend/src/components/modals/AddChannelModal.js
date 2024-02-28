@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { closeModal } from '../../slices/modalSlice';
 import { useSendChannelMutation } from '../../services/chatApi';
 
@@ -39,9 +40,10 @@ const AddChannelModal = () => {
         const response = await sendChannel(val);
         if (response.error) throw new Error(response.error);
         handleClose();
+        toast.success(t('notifications.addChannelSuccess'));
       } catch (err) {
         btnSubmit.current.disabled = false;
-        console.log('Произошла сетевая ошибка: ', err);
+        toast.error(t('notifications.networkError'));
       }
     },
   });

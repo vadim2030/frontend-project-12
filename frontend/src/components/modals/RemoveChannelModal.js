@@ -2,6 +2,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { closeModal } from '../../slices/modalSlice';
 import { useRemoveChannelMutation } from '../../services/chatApi';
 
@@ -19,9 +20,10 @@ const RemoveChannelModal = () => {
       const response = await removeChannel({ id: chnId });
       if (response.error) throw new Error(response.error);
       handleClose();
+      toast.success(t('notifications.removeChannelSuccess'));
     } catch (err) {
       btnRemove.current.disabled = false;
-      console.log('Произошла сетевая ошибка: ', err);
+      toast.error(t('notifications.networkError'));
     }
   };
 

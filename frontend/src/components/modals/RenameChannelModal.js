@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useRenameChannelMutation } from '../../services/chatApi';
 import { closeModal } from '../../slices/modalSlice';
 
@@ -42,9 +43,11 @@ const RenameChannelModal = () => {
         });
         if (response.error) throw new Error(response.error);
         handleClose();
+        toast.success(t('notifications.renameChannelSuccess'));
       } catch (err) {
         btnSubmit.current.disabled = false;
         console.log('Произошла сетевая ошибка: ', err);
+        toast.error(t('notifications.networkError'));
       }
     },
   });
