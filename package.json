@@ -8,7 +8,7 @@
     "postinstall": "cd ./frontend && npm ci",
     "build": "npm run build --prefix frontend"
   },
-  "author": "",
+  "author": "Vadim Bunos",
   "license": "ISC",
   "dependencies": {
     "@hexlet/chat-server": "^2.0.0"
