@@ -2,11 +2,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { closeModal } from '../../slices/modalSlice';
 import { useSendChannelMutation } from '../../services/chatApi';
+import { FilterContext } from '../../hoc/FilterProfanityProvider';
 
 const AddChannelModal = () => {
   const { t } = useTranslation();
@@ -17,6 +18,7 @@ const AddChannelModal = () => {
   const [sendChannel] = useSendChannelMutation();
   const btnSubmit = useRef(null);
   const inputRef = useRef(null);
+  const filter = useContext(FilterContext);
 
   const channelNames = channels.map((chl) => chl.name);
 
@@ -34,10 +36,10 @@ const AddChannelModal = () => {
       name: '',
     },
     validationSchema: newChannelSchema,
-    onSubmit: async (val) => {
+    onSubmit: async ({ name }) => {
       try {
         btnSubmit.current.disabled = true;
-        const response = await sendChannel(val);
+        const response = await sendChannel({ name: filter.clean(name) });
         if (response.error) throw new Error(response.error);
         handleClose();
         toast.success(t('notifications.addChannelSuccess'));

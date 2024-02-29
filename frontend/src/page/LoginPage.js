@@ -2,7 +2,7 @@ import { Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import loginIMG from '../assets/avatar.jpg';
 import FormForLoginPage from '../components/FormForLoginPage';
-import useIsAuthorizedUser from '../components/hook/useIsAuthorizedUser.js';
+import useIsAuthorizedUser from '../hook/useIsAuthorizedUser.js';
 import getRoutes from '../routes.js';
 
 const LoginPage = () => {

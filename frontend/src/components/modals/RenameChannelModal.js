@@ -2,11 +2,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRenameChannelMutation } from '../../services/chatApi';
 import { closeModal } from '../../slices/modalSlice';
+import { FilterContext } from '../../hoc/FilterProfanityProvider';
 
 const RenameChannelModal = () => {
   const { t } = useTranslation();
@@ -19,6 +20,7 @@ const RenameChannelModal = () => {
   const [renameChannel] = useRenameChannelMutation();
   const handleClose = () => dispatch(closeModal());
   const inputRef = useRef(null);
+  const filter = useContext(FilterContext);
 
   const newChannelSchema = yup.object().shape({
     name: yup.string().required().trim().min(3, t('modals.errors.minLength'))
@@ -34,11 +36,11 @@ const RenameChannelModal = () => {
       name: initialNameChannel,
     },
     validationSchema: newChannelSchema,
-    onSubmit: async (value) => {
+    onSubmit: async ({ name }) => {
       try {
         btnSubmit.current.disabled = true;
         const response = await renameChannel({
-          ...value,
+          name: filter.clean(name),
           id: chnId,
         });
         if (response.error) throw new Error(response.error);
@@ -46,7 +48,6 @@ const RenameChannelModal = () => {
         toast.success(t('notifications.renameChannelSuccess'));
       } catch (err) {
         btnSubmit.current.disabled = false;
-        console.log('Произошла сетевая ошибка: ', err);
         toast.error(t('notifications.networkError'));
       }
     },

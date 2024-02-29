@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { InputGroup, Form, Button } from 'react-bootstrap';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 import * as yup from 'yup';
@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useSendMessageMutation } from '../../services/chatApi';
+import { FilterContext } from '../../hoc/FilterProfanityProvider';
 
 const newMessageSchema = yup.object().shape({
   newMessage: yup.string().required().trim().min(1),
@@ -18,6 +19,8 @@ const NewMessageForm = () => {
   const channelId = useSelector((state) => state.channelData.currentChannelID);
   const { username } = useSelector((state) => state.authData);
   const refControl = useRef(null);
+  const filter = useContext(FilterContext);
+
   const formik = useFormik({
     initialValues: {
       newMessage: '',
@@ -27,7 +30,7 @@ const NewMessageForm = () => {
     onSubmit: async ({ newMessage }) => {
       try {
         await sendMessage({
-          body: newMessage,
+          body: filter.clean(newMessage),
           channelId,
           username,
         });

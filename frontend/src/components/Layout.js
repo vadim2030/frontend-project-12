@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import getRoutes from '../routes.js';
 import { setUserLocalStore } from '../utils/localStore.js';
 import { removeCredentials } from '../slices/authSlice.js';
-import useIsAuthorizedUser from './hook/useIsAuthorizedUser.js';
+import useIsAuthorizedUser from '../hook/useIsAuthorizedUser.js';
 
 const Layout = () => {
   const { t } = useTranslation();
