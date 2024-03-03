@@ -2,7 +2,7 @@ make build:
 	npm run build
 
 make start:
-	npm run start
+	npx start-server -s ./frontend/build
 
 make install:
 	npm ci
