@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "start-server -s ./frontend/build",
-    "postinstall": "cd ./frontend && npm ci",
-    "build": "npm run build --prefix frontend"
+    "start": "start-server -s ./ffrontend-project-12/build",
+    "postinstall": "cd ./ffrontend-project-12 && npm ci",
+    "build": "npm run build --prefix frontend-project-12"
   },
   "author": "Vadim Bunos",
   "license": "ISC",
