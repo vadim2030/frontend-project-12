@@ -1,8 +1,12 @@
-install:
-	npm ci && npm run postinstall && npm run build
+make build:
+	npm run build
 
-start:
+npm start:
 	npx start-server -s ./frontend/build
 
-build:
-	npm run build
+make install:
+	npm ci
+
+make deployment:
+	make install
+	make build
