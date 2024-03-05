@@ -1,11 +1,12 @@
-install:
+make build:
+	npm run build
+
+npm start:
+	npx start-server -s ./frontend/build
+
+make install:
 	npm ci
 
-start:
-	npm start
-
-build:
-	npm build
-
-lint:
-	npx eslint --ext js,jsx --no-eslintrc --config .eslintrc.yml .
+make deployment:
+	make install
+	make build
