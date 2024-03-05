@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx start-server -s ./frontend/build",
-    "postinstall": "cd ./frontend && npm ci",
+    "start": "start-server -s ./frontend/build",
+    "postinstall": "cd ./frontend",
     "build": "npm run build --prefix frontend"
   },
   "author": "Vadim Bunos",
