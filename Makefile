@@ -1,7 +1,7 @@
 build:
 	npm run build
 
-npm start:
+start:
 	npx start-server -s ./frontend/build
 
 install:
