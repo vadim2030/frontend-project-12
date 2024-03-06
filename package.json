@@ -9,18 +9,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "cd frontend && npm ci"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vadim2030/frontend-project-12"
-  },
-  "author": "Bunos Vadim",
+  "author": "Vadim Bunos",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/vadim2030/frontend-project-12/issues"
-  },
-  "homepage": "https://github.com/vadim2030/frontend-project-12#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^2.0.0",
-    "package": "^1.0.1"
+    "@hexlet/chat-server": "^2.0.0"
   }
 }
