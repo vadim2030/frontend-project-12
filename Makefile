@@ -1,7 +1,3 @@
-deployment:
-	make install
-	make build
-
 install:
 	npm ci && npm run postinstall && npm run build
 
