@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/vadim2030/frontend-project-12#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^2.0.0"
+    "@hexlet/chat-server": "^2.0.0",
+    "package": "^1.0.1"
   }
 }
