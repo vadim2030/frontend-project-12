@@ -1,3 +1,6 @@
+npm start:
+	npx start-server -s ./frontend/build
+
 install:
 	npm ci && npm run postinstall && npm run build
 
@@ -6,3 +9,5 @@ start:
 
 build:
 	npm run build
+
+	
