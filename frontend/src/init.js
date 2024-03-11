@@ -25,18 +25,31 @@ const init = async () => {
     });
 
   const userData = getUserLocalStore();
+  if (process.env.REACT_APP_ROLLBAR_TOKEN) {
+    return (
+      <RollbarProvider instance={rollbar}>
+        <ErrorBoundary>
+          <I18nextProvider i18n={i18n}>
+            <ReduxProvider store={store}>
+              <FilterProfanityProvider>
+                <App userData={userData} />
+              </FilterProfanityProvider>
+            </ReduxProvider>
+          </I18nextProvider>
+        </ErrorBoundary>
+      </RollbarProvider>
+    );
+  }
   return (
-    <RollbarProvider instance={rollbar}>
-      <ErrorBoundary>
-        <I18nextProvider i18n={i18n}>
-          <ReduxProvider store={store}>
-            <FilterProfanityProvider>
-              <App userData={userData} />
-            </FilterProfanityProvider>
-          </ReduxProvider>
-        </I18nextProvider>
-      </ErrorBoundary>
-    </RollbarProvider>
+    <ErrorBoundary>
+      <I18nextProvider i18n={i18n}>
+        <ReduxProvider store={store}>
+          <FilterProfanityProvider>
+            <App userData={userData} />
+          </FilterProfanityProvider>
+        </ReduxProvider>
+      </I18nextProvider>
+    </ErrorBoundary>
   );
 };
 
