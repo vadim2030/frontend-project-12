@@ -44,7 +44,7 @@ export default {
     ChatPage: {
       ChannelsList: {
         title: 'Каналы',
-        btnAddChannel: 'Добавить канал',
+        btnAddChannel: '+',
         ChannelBtn: {
           btnChannelManagement: 'Управление каналом',
           btnRemoveChannel: 'Удалить',
