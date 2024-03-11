@@ -4,8 +4,7 @@ import filter from 'leo-profanity';
 export const FilterContext = createContext(null);
 
 const FilterProfanityProvider = ({ children }) => {
-  filter.loadDictionary('ru');
-  filter.loadDictionary('en');
+  filter.add(filter.getDictionary('ru'));
   return (<FilterContext.Provider value={filter}>{children}</FilterContext.Provider>);
 };
 
