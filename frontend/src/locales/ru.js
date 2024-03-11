@@ -82,8 +82,8 @@ export default {
       btnCancel: 'Отменить',
       btnRemove: 'Удалить',
       errors: {
-        minLength: 'Минимум 3 символа',
-        maxLength: 'Максимум 20 символов!',
+        minLength: 'От 3 до 20 символов',
+        maxLength: 'От 3 до 20 символов',
         uniqueName: 'Должно быть уникальным',
       },
     },
