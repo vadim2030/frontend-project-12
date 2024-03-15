@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useEffect, useRef } from 'react';
 import { openModal } from '../../slices/modalSlice';
 
 import ChannelBtn from './ChannelBtn';
@@ -7,6 +8,9 @@ import ChannelBtn from './ChannelBtn';
 const ChannelsList = () => {
   const { t } = useTranslation();
   const { channels } = useSelector((state) => state.channelData);
+  const { currentChannelListPosition } = useSelector((state) => state.UI);
+  const startListRef = useRef(null);
+  const endListRef = useRef(null);
   const dispatch = useDispatch();
   const handleOpenModal = () => {
     dispatch(openModal({
@@ -14,6 +18,16 @@ const ChannelsList = () => {
       isOpened: true,
     }));
   };
+
+  console.log(currentChannelListPosition);
+
+  useEffect(() => {
+    if (currentChannelListPosition === 'end') {
+      endListRef.current.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      startListRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [currentChannelListPosition]);
 
   return (
     <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
@@ -28,7 +42,9 @@ const ChannelsList = () => {
         </button>
       </div>
       <ul className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
+        <div ref={startListRef} />
         {channels.map((channel) => (<ChannelBtn key={channel.id} channel={channel} />))}
+        <div ref={endListRef} />
       </ul>
     </div>
   );

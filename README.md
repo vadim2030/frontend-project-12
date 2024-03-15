@@ -3,6 +3,3 @@
 
 [![Hexlet-Chat on Render.com]](https://progect-4.onrender.com/)
 
-
-
-

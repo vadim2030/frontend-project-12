@@ -10,3 +10,6 @@ install:
 deployment:
 	make install
 	make build
+
+lint:
+	npx eslint frontend

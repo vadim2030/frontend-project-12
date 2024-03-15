@@ -58,7 +58,7 @@ const RenameChannelModal = () => {
   } = formik;
 
   useEffect(() => {
-    inputRef.current.focus();
+    inputRef.current.select();
   }, []);
 
   return (

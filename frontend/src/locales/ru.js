@@ -85,6 +85,7 @@ export default {
         minLength: 'От 3 до 20 символов',
         maxLength: 'От 3 до 20 символов',
         uniqueName: 'Должно быть уникальным',
+        requiredField: 'Обязательное поле',
       },
     },
     notifications: {
@@ -92,7 +93,6 @@ export default {
       removeChannelSuccess: 'Канал удалён',
       networkError: 'Произошла сетевая ошибка',
       renameChannelSuccess: 'Канал переименован',
-
     },
   },
 };

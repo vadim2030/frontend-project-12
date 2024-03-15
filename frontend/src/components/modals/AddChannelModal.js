@@ -23,7 +23,7 @@ const AddChannelModal = () => {
   const channelNames = channels.map((chl) => chl.name);
 
   const newChannelSchema = yup.object().shape({
-    name: yup.string().required().trim().min(3, t('modals.errors.minLength'))
+    name: yup.string().required(t('modals.errors.requiredField')).trim().min(3, t('modals.errors.minLength'))
       .max(20, t('modals.errors.maxLength'))
       .test({
         message: t('modals.errors.uniqueName'),
@@ -73,7 +73,6 @@ const AddChannelModal = () => {
               name="name"
               value={name}
               type="text"
-              required
               isInvalid={touched.name && errors.name}
             />
             {!isValid && <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>}
