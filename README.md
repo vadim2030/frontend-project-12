@@ -1,8 +1,6 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/vadim2030/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/vadim2030/frontend-project-12/actions)
-
-[![Hexlet-Chat on Render.com]](https://progect-4.onrender.com/)
-
+[![Maintainability](https://api.codeclimate.com/v1/badges/1d857ee1dad942de79b6/maintainability)](https://codeclimate.com/github/vadim2030/frontend-project-12/maintainability)
 [![ESLint](https://github.com/vadim2030/frontend-project-12/actions/workflows/custom-lint.yml/badge.svg)](https://github.com/vadim2030/frontend-project-12/actions/workflows/custom-lint.yml)
 
 # Hexlet-Chat
