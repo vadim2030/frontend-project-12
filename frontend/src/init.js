@@ -3,11 +3,13 @@ import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import Rollbar from 'rollbar';
+import { io } from 'socket.io-client';
 import App from './components/App';
 import resources from './locales/index.js';
 import store from './store/store.js';
 import { getUserLocalStore } from './utils/localStore.js';
 import FilterProfanityProvider from './hoc/FilterProfanityProvider.js';
+import SocketProvider from './hoc/SocketProvider.js';
 
 const init = async () => {
   const rollbarConfig = {
@@ -24,17 +26,23 @@ const init = async () => {
       fallbackLng: 'ru',
     });
 
+  const socket = io({
+    autoConnect: false,
+  });
+
   const userData = getUserLocalStore();
   if (process.env.REACT_APP_ROLLBAR_TOKEN) {
     return (
       <RollbarProvider instance={rollbar}>
         <ErrorBoundary>
           <I18nextProvider i18n={i18n}>
-            <ReduxProvider store={store}>
-              <FilterProfanityProvider>
-                <App userData={userData} />
-              </FilterProfanityProvider>
-            </ReduxProvider>
+            <SocketProvider socket={socket}>
+              <ReduxProvider store={store}>
+                <FilterProfanityProvider>
+                  <App userData={userData} />
+                </FilterProfanityProvider>
+              </ReduxProvider>
+            </SocketProvider>
           </I18nextProvider>
         </ErrorBoundary>
       </RollbarProvider>
@@ -43,11 +51,13 @@ const init = async () => {
   return (
     <ErrorBoundary>
       <I18nextProvider i18n={i18n}>
-        <ReduxProvider store={store}>
-          <FilterProfanityProvider>
-            <App userData={userData} />
-          </FilterProfanityProvider>
-        </ReduxProvider>
+        <SocketProvider socket={socket}>
+          <ReduxProvider store={store}>
+            <FilterProfanityProvider>
+              <App userData={userData} />
+            </FilterProfanityProvider>
+          </ReduxProvider>
+        </SocketProvider>
       </I18nextProvider>
     </ErrorBoundary>
   );

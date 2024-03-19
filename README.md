@@ -23,5 +23,5 @@ This application includes registration, authorization, error page and chat page.
 * Use `make build` to build the project, and then `make start` to start the server.
 
 ### Demonstration of work:
-### :sparkles: [![Hexlet-Chat on Render.com]](https://progect-4.onrender.com/) :sparkles:
+ [[Hexlet-Chat on Render.com]](https://progect-4.onrender.com/) 
 

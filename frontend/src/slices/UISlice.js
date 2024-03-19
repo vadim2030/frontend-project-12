@@ -1,13 +1,15 @@
 /* eslint-disable no-param-reassign */
 
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, current } from '@reduxjs/toolkit';
 import { chatApi } from '../services/chatApi';
+import { switchChannel } from './channelSlice';
 
 const initialState = {
-  currentChannelListPosition: 'start',
+  currentChannelListPosition: null,
+  currentChannelID: null,
 };
 
-const UISlice = createSlice({
+const uiSlice = createSlice({
   name: 'UISlice',
   initialState,
   reducers: {
@@ -17,21 +19,28 @@ const UISlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(switchChannel, (state, { payload }) => {
+        state.currentChannelID = payload;
+      })
       .addMatcher(
         chatApi.endpoints.removeChannel.matchFulfilled,
-        (state) => {
-          state.currentChannelListPosition = 'start';
+        (state, { payload }) => {
+          if (current(state).currentChannelID === payload.id) {
+            state.currentChannelID = '1';
+            state.currentChannelListPosition = 'start';
+          }
         },
       )
       .addMatcher(
         chatApi.endpoints.sendChannel.matchFulfilled,
-        (state) => {
+        (state, { payload: { id } }) => {
+          state.currentChannelID = id;
           state.currentChannelListPosition = 'end';
         },
       );
   },
 });
 
-export const { setCurrentChannelListPosition } = UISlice.actions;
+export const { setCurrentChannelListPosition } = uiSlice.actions;
 
-export default UISlice.reducer;
+export default uiSlice.reducer;

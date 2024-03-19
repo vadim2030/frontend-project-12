@@ -2,13 +2,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useRef } from 'react';
 import { openModal } from '../../slices/modalSlice';
+import { setCurrentChannelListPosition } from '../../slices/uiSlice';
 
 import ChannelBtn from './ChannelBtn';
 
 const ChannelsList = () => {
   const { t } = useTranslation();
   const { channels } = useSelector((state) => state.channelData);
-  const { currentChannelListPosition } = useSelector((state) => state.UI);
+  const { currentChannelListPosition } = useSelector((state) => state.ui);
   const startListRef = useRef(null);
   const endListRef = useRef(null);
   const dispatch = useDispatch();
@@ -19,13 +20,14 @@ const ChannelsList = () => {
     }));
   };
 
-  console.log(currentChannelListPosition);
-
   useEffect(() => {
     if (currentChannelListPosition === 'end') {
-      endListRef.current.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      startListRef.current.scrollIntoView({ behavior: 'smooth' });
+      endListRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      dispatch(setCurrentChannelListPosition(null));
+    }
+    if (currentChannelListPosition === 'start') {
+      startListRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      dispatch(setCurrentChannelListPosition(null));
     }
   }, [currentChannelListPosition]);
 

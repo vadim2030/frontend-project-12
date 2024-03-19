@@ -16,7 +16,6 @@ const AddChannelModal = () => {
   const dispatch = useDispatch();
   const handleClose = () => dispatch(closeModal());
   const [sendChannel] = useSendChannelMutation();
-  const btnSubmit = useRef(null);
   const inputRef = useRef(null);
   const filter = useContext(FilterContext);
 
@@ -38,20 +37,18 @@ const AddChannelModal = () => {
     validationSchema: newChannelSchema,
     onSubmit: async ({ name }) => {
       try {
-        btnSubmit.current.disabled = true;
         const response = await sendChannel({ name: filter.clean(name) });
         if (response.error) throw new Error(response.error);
         handleClose();
         toast.success(t('notifications.addChannelSuccess'));
       } catch (err) {
-        btnSubmit.current.disabled = false;
         toast.error(t('notifications.networkError'));
       }
     },
   });
 
   const {
-    handleChange, handleSubmit, values: { name }, isValid, errors, touched,
+    handleChange, handleSubmit, values: { name }, isValid, errors, touched, isSubmitting,
   } = formik;
 
   useEffect(() => {
@@ -65,22 +62,24 @@ const AddChannelModal = () => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formNewNameChl">
-            <Form.Label className="visually-hidden">{t('modals.AddChannel.formLable')}</Form.Label>
-            <Form.Control
-              ref={inputRef}
-              onChange={handleChange}
-              name="name"
-              value={name}
-              type="text"
-              isInvalid={touched.name && errors.name}
-            />
-            {!isValid && <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>}
-          </Form.Group>
-          <Modal.Footer>
-            <Button onClick={handleClose} type="button">{t('modals.btnCancel')}</Button>
-            <Button ref={btnSubmit} type="submit">{t('modals.btnSend')}</Button>
-          </Modal.Footer>
+          <fieldset disabled={isSubmitting}>
+            <Form.Group controlId="formNewNameChl">
+              <Form.Label className="visually-hidden">{t('modals.AddChannel.formLable')}</Form.Label>
+              <Form.Control
+                ref={inputRef}
+                onChange={handleChange}
+                name="name"
+                value={name}
+                type="text"
+                isInvalid={touched.name && errors.name}
+              />
+              {!isValid && <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>}
+            </Form.Group>
+            <Modal.Footer>
+              <Button onClick={handleClose} type="button">{t('modals.btnCancel')}</Button>
+              <Button type="submit">{t('modals.btnSend')}</Button>
+            </Modal.Footer>
+          </fieldset>
         </Form>
       </Modal.Body>
     </Modal>

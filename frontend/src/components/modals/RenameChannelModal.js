@@ -16,7 +16,6 @@ const RenameChannelModal = () => {
   const { channels } = useSelector((state) => state.channelData);
   const { name: initialNameChannel } = channels.find((chl) => chl.id === chnId);
   const channelNames = channels.map((chl) => chl.name);
-  const btnSubmit = useRef(null);
   const [renameChannel] = useRenameChannelMutation();
   const handleClose = () => dispatch(closeModal());
   const inputRef = useRef(null);
@@ -38,7 +37,6 @@ const RenameChannelModal = () => {
     validationSchema: newChannelSchema,
     onSubmit: async ({ name }) => {
       try {
-        btnSubmit.current.disabled = true;
         const response = await renameChannel({
           name: filter.clean(name),
           id: chnId,
@@ -47,14 +45,13 @@ const RenameChannelModal = () => {
         handleClose();
         toast.success(t('notifications.renameChannelSuccess'));
       } catch (err) {
-        btnSubmit.current.disabled = false;
         toast.error(t('notifications.networkError'));
       }
     },
   });
 
   const {
-    handleChange, handleSubmit, values: { name }, isValid, errors, touched,
+    handleChange, handleSubmit, values: { name }, isValid, errors, touched, isSubmitting,
   } = formik;
 
   useEffect(() => {
@@ -68,23 +65,25 @@ const RenameChannelModal = () => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formNewNameChl">
-            <Form.Label className="visually-hidden">{t('modals.RenameChannel.lable')}</Form.Label>
-            <Form.Control
-              ref={inputRef}
-              onChange={handleChange}
-              name="name"
-              value={name}
-              type="text"
-              required
-              isInvalid={touched.name && errors.name}
-            />
-            {!isValid && <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>}
-          </Form.Group>
-          <Modal.Footer>
-            <Button onClick={handleClose} type="button">{t('modals.btnCancel')}</Button>
-            <Button ref={btnSubmit} type="submit">{t('modals.btnSend')}</Button>
-          </Modal.Footer>
+          <fieldset disabled={isSubmitting}>
+            <Form.Group controlId="formNewNameChl">
+              <Form.Label className="visually-hidden">{t('modals.RenameChannel.lable')}</Form.Label>
+              <Form.Control
+                ref={inputRef}
+                onChange={handleChange}
+                name="name"
+                value={name}
+                type="text"
+                required
+                isInvalid={touched.name && errors.name}
+              />
+              {!isValid && <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>}
+            </Form.Group>
+            <Modal.Footer>
+              <Button onClick={handleClose} type="button">{t('modals.btnCancel')}</Button>
+              <Button type="submit">{t('modals.btnSend')}</Button>
+            </Modal.Footer>
+          </fieldset>
         </Form>
       </Modal.Body>
     </Modal>

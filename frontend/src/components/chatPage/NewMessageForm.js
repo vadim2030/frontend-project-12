@@ -1,5 +1,7 @@
 import { useFormik } from 'formik';
-import { useContext, useEffect, useRef } from 'react';
+import {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import { InputGroup, Form, Button } from 'react-bootstrap';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 import * as yup from 'yup';
@@ -20,6 +22,7 @@ const NewMessageForm = () => {
   const { username } = useSelector((state) => state.authData);
   const refControl = useRef(null);
   const filter = useContext(FilterContext);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -28,6 +31,7 @@ const NewMessageForm = () => {
     validateOnMount: true,
     validationSchema: newMessageSchema,
     onSubmit: async ({ newMessage }) => {
+      setIsSubmitting(true);
       try {
         await sendMessage({
           body: filter.clean(newMessage),
@@ -35,38 +39,44 @@ const NewMessageForm = () => {
           username,
         });
         formik.values.newMessage = '';
+        setIsSubmitting(false);
       } catch (err) {
         toast.error(t('notifications.networkError'));
+        setIsSubmitting(false);
       }
     },
   });
 
-  useEffect(() => {
-    refControl.current.focus();
-  }, []);
-
   const {
-    handleChange, values: { newMessage }, handleSubmit, isValid, isSubmitting,
+    handleChange, values: { newMessage }, handleSubmit,
   } = formik;
+
+  useEffect(() => {
+    if (!isSubmitting) {
+      refControl.current.focus();
+    }
+  }, [isSubmitting]);
 
   return (
     <div className="mt-auto px-5 py-3">
       <Form onSubmit={handleSubmit} className="py-1 border rounded-2">
-        <InputGroup>
-          <Form.Control
-            ref={refControl}
-            onChange={handleChange}
-            value={newMessage}
-            name="newMessage"
-            className="border-0 p-0 ps-2"
-            placeholder={t('ChatPage.Chat.form.inputPlaceholder')}
-            aria-label={t('ChatPage.Chat.form.inputLabel')}
-          />
-          <Button disabled={(!isValid || isSubmitting)} type="submit" className="btn-group-vertical" variant="">
-            <ArrowRightSquare width="20" height="20" />
-            <span className="visually-hidden">{t('ChatPage.Chat.form.btnSubmit')}</span>
-          </Button>
-        </InputGroup>
+        <fieldset disabled={(isSubmitting)}>
+          <InputGroup>
+            <Form.Control
+              ref={refControl}
+              onChange={handleChange}
+              value={newMessage}
+              name="newMessage"
+              className="border-0 p-0 ps-2"
+              placeholder={t('ChatPage.Chat.form.inputPlaceholder')}
+              aria-label={t('ChatPage.Chat.form.inputLabel')}
+            />
+            <Button type="submit" className="btn-group-vertical" variant="">
+              <ArrowRightSquare width="20" height="20" />
+              <span className="visually-hidden">{t('ChatPage.Chat.form.btnSubmit')}</span>
+            </Button>
+          </InputGroup>
+        </fieldset>
       </Form>
     </div>
   );

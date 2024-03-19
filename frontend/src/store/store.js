@@ -4,7 +4,7 @@ import authReducer from '../slices/authSlice';
 import channelReducer from '../slices/channelSlice';
 import messagesReducer from '../slices/messagesSlice';
 import modalReducer from '../slices/modalSlice';
-import UIReducer from '../slices/UISlice';
+import uiReducer from '../slices/uiSlice';
 
 const store = configureStore({
   reducer: {
@@ -13,7 +13,7 @@ const store = configureStore({
     channelData: channelReducer,
     messagesData: messagesReducer,
     modal: modalReducer,
-    UI: UIReducer,
+    ui: uiReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(chatApi.middleware),
 });
