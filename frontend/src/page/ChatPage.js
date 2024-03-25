@@ -12,7 +12,7 @@ import { SocketContext } from '../hoc/SocketProvider';
 const ChatPage = () => {
   const socket = useContext(SocketContext);
   const dispatch = useDispatch();
-  const { type } = useSelector((state) => state.modal);
+  const { type } = useSelector((state) => state.ui.modal);
   const { isLoading: isLoadChannels } = useGetChannelsQuery();
   const { isLoading: isLoadMessages } = useGetMessagesQuery();
 

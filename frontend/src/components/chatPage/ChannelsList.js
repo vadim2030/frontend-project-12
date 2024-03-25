@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useRef } from 'react';
-import { openModal } from '../../slices/modalSlice';
-import { setCurrentChannelListPosition } from '../../slices/uiSlice';
+import { setCurrentChannelListPosition, openModal } from '../../slices/uiSlice';
 
 import ChannelBtn from './ChannelBtn';
 

@@ -4,6 +4,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import Rollbar from 'rollbar';
 import { io } from 'socket.io-client';
+import filter from 'leo-profanity';
 import App from './components/App';
 import resources from './locales/index.js';
 import store from './store/store.js';
@@ -30,6 +31,8 @@ const init = async () => {
     autoConnect: false,
   });
 
+  filter.add(filter.getDictionary('ru'));
+
   const userData = getUserLocalStore();
   if (process.env.REACT_APP_ROLLBAR_TOKEN) {
     return (
@@ -38,7 +41,7 @@ const init = async () => {
           <I18nextProvider i18n={i18n}>
             <SocketProvider socket={socket}>
               <ReduxProvider store={store}>
-                <FilterProfanityProvider>
+                <FilterProfanityProvider filter={filter}>
                   <App userData={userData} />
                 </FilterProfanityProvider>
               </ReduxProvider>
@@ -53,7 +56,7 @@ const init = async () => {
       <I18nextProvider i18n={i18n}>
         <SocketProvider socket={socket}>
           <ReduxProvider store={store}>
-            <FilterProfanityProvider>
+            <FilterProfanityProvider filter={filter}>
               <App userData={userData} />
             </FilterProfanityProvider>
           </ReduxProvider>

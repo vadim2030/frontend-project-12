@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { closeModal } from '../../slices/modalSlice';
+import { closeModal } from '../../slices/uiSlice';
 import { useRemoveChannelMutation } from '../../services/chatApi';
 
 const RemoveChannelModal = () => {
   const { t } = useTranslation();
-  const { isOpened, chnId } = useSelector((state) => state.modal);
+  const { isOpened, chnId } = useSelector((state) => state.ui.modal);
   const dispatch = useDispatch();
   const handleClose = () => dispatch(closeModal());
   const [removeChannel] = useRemoveChannelMutation();

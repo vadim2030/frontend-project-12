@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import getRoutes from '../routes.js';
+
+const baseQuery = '/api/v1/';
 
 export const chatApi = createApi({
   reducerPath: 'ChatApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: getRoutes.baseQuery(),
+    baseUrl: baseQuery,
     prepareHeaders: (headers, { getState }) => {
       const { token } = getState().authData;
       if (token) {

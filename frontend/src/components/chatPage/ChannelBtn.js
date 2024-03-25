@@ -2,7 +2,7 @@ import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { switchChannel } from '../../slices/channelSlice';
-import { openModal } from '../../slices/modalSlice';
+import { openModal } from '../../slices/uiSlice';
 
 const ChannelBtn = ({ channel }) => {
   const { t } = useTranslation();

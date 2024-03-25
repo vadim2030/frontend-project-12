@@ -6,13 +6,13 @@ import { useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRenameChannelMutation } from '../../services/chatApi';
-import { closeModal } from '../../slices/modalSlice';
+import { closeModal } from '../../slices/uiSlice';
 import { FilterContext } from '../../hoc/FilterProfanityProvider';
 
 const RenameChannelModal = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { isOpened, chnId } = useSelector((state) => state.modal);
+  const { isOpened, chnId } = useSelector((state) => state.ui.modal);
   const { channels } = useSelector((state) => state.channelData);
   const { name: initialNameChannel } = channels.find((chl) => chl.id === chnId);
   const channelNames = channels.map((chl) => chl.name);

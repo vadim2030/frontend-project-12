@@ -5,13 +5,13 @@ import * as yup from 'yup';
 import { useContext, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { closeModal } from '../../slices/modalSlice';
+import { closeModal } from '../../slices/uiSlice';
 import { useSendChannelMutation } from '../../services/chatApi';
 import { FilterContext } from '../../hoc/FilterProfanityProvider';
 
 const AddChannelModal = () => {
   const { t } = useTranslation();
-  const { isOpened } = useSelector((state) => state.modal);
+  const { isOpened } = useSelector((state) => state.ui.modal);
   const { channels } = useSelector((state) => state.channelData);
   const dispatch = useDispatch();
   const handleClose = () => dispatch(closeModal());
