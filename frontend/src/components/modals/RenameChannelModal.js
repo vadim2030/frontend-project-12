@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRenameChannelMutation } from '../../services/chatApi';
 import { closeModal } from '../../slices/uiSlice';
-import { FilterContext } from '../../hoc/FilterProfanityProvider';
+import { FilterContext } from '../../providers/FilterProfanityProvider';
 
 const RenameChannelModal = () => {
   const { t } = useTranslation();

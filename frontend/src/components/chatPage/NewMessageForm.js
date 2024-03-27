@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useSendMessageMutation } from '../../services/chatApi';
-import { FilterContext } from '../../hoc/FilterProfanityProvider';
+import { FilterContext } from '../../providers/FilterProfanityProvider';
 
 const newMessageSchema = yup.object().shape({
   newMessage: yup.string().required().trim().min(1),

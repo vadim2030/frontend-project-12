@@ -7,7 +7,7 @@ import Chat from '../components/chatPage/Chat.js';
 import { addMessage } from '../slices/messagesSlice.js';
 import getModal from '../components/modals';
 import { addChannel, removeChannel, renameChannel } from '../slices/channelSlice.js';
-import { SocketContext } from '../hoc/SocketProvider';
+import { SocketContext } from '../providers/SocketProvider';
 
 const ChatPage = () => {
   const socket = useContext(SocketContext);

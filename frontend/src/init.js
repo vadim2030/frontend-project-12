@@ -9,8 +9,8 @@ import App from './components/App';
 import resources from './locales/index.js';
 import store from './store/store.js';
 import { getUserLocalStore } from './utils/localStore.js';
-import FilterProfanityProvider from './hoc/FilterProfanityProvider.js';
-import SocketProvider from './hoc/SocketProvider.js';
+import FilterProfanityProvider from './providers/FilterProfanityProvider.js';
+import SocketProvider from './providers/SocketProvider.js';
 
 const init = async () => {
   const rollbarConfig = {
