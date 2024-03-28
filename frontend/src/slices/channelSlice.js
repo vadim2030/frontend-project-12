@@ -6,14 +6,16 @@ import { chatApi } from '../services/chatApi';
 const initialState = {
   channels: [],
   currentChannelID: null,
+  currentChannelName: null,
 };
 
 export const channelSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
-    switchChannel: (state, { payload }) => {
-      state.currentChannelID = payload;
+    switchChannel: (state, { payload: { id, name } }) => {
+      state.currentChannelID = id;
+      state.currentChannelName = name;
     },
     addChannel: (state, { payload }) => {
       state.channels.push(payload);
@@ -38,6 +40,7 @@ export const channelSlice = createSlice({
         (state, { payload }) => {
           state.channels = payload;
           state.currentChannelID = payload[0].id;
+          state.currentChannelName = payload[0].name;
         },
       )
       .addMatcher(

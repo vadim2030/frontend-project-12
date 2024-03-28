@@ -28,7 +28,7 @@ const ChannelBtn = ({ channel }) => {
   if (!isRemovable) {
     return (
       <li className="nav-item w-100">
-        <Button onClick={() => dispatch(switchChannel(id))} className="w-100 rounded-0 text-start" variant={id === currentChannelID ? 'secondary' : ''}>
+        <Button onClick={() => dispatch(switchChannel({ id, name }))} className="w-100 rounded-0 text-start" variant={id === currentChannelID ? 'secondary' : ''}>
           <span className="me-1">#</span>
           {name}
         </Button>
@@ -39,7 +39,7 @@ const ChannelBtn = ({ channel }) => {
   return (
     <li className="nav-item w-100">
       <ButtonGroup className="d-flex dropdown">
-        <Button onClick={() => dispatch(switchChannel(id))} className="w-100 rounded-0 text-start text-truncate" variant={id === currentChannelID ? 'secondary' : ''}>
+        <Button onClick={() => dispatch(switchChannel({ id, name }))} className="w-100 rounded-0 text-start text-truncate" variant={id === currentChannelID ? 'secondary' : ''}>
           <span className="me-1">#</span>
           {name}
         </Button>

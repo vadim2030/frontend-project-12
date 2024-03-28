@@ -12,6 +12,7 @@ const initialState = {
   },
   currentChannelListPosition: null,
   currentChannelID: null,
+  currentChannelName: null,
 };
 
 const uiSlice = createSlice({
@@ -34,8 +35,9 @@ const uiSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(switchChannel, (state, { payload }) => {
-        state.currentChannelID = payload;
+      .addCase(switchChannel, (state, { payload: { id, name } }) => {
+        state.currentChannelID = id;
+        state.currentChannelName = name;
       })
       .addMatcher(
         chatApi.endpoints.removeChannel.matchFulfilled,

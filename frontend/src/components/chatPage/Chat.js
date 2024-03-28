@@ -6,10 +6,9 @@ import NewMessageForm from './NewMessageForm';
 const Chat = () => {
   const { t } = useTranslation();
   const chatRef = useRef(null);
-  const { currentChannelID, channels } = useSelector((state) => state.channelData);
+  const { currentChannelID, currentChannelName } = useSelector((state) => state.channelData);
   const { messages } = useSelector((state) => state.messagesData);
   const currentMessages = messages.filter(({ channelId }) => channelId === currentChannelID);
-  const channelName = channels.find((channel) => channel.id === currentChannelID).name;
 
   useEffect(() => {
     const { scrollHeight } = chatRef.current;
@@ -24,7 +23,7 @@ const Chat = () => {
             <b>
               #
               {' '}
-              {channelName}
+              {currentChannelName}
             </b>
           </p>
           <span className="text-muted">
